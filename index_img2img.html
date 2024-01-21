@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>IMG2IMG STABLE DIFFUSION GOKCEEE</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Stable Diffusion Image-to-Image App</h1>
+    <p>Enter a text prompt and upload an image. Click "Generate" to transform the image (takes ~10 seconds).</p>
+
+    <!-- Form for image generation -->
+    <form action="/submit-img2img" method="post" id="submission-form" enctype="multipart/form-data">
+        <ul>
+            <li>
+                <label for="prompt-input">Text Prompt:</label>
+                <input type="text" id="prompt-input" name="prompt-input" required />
+            </li>
+            <li>
+                <label for="image-input">Upload Image:</label>
+                <input type="file" id="image-input" name="image-input" accept="image/*" required />
+            </li>
+            <li class="button">
+                <button type="submit">Generate Image</button>
+            </li>
+        </ul>
+    </form>
+
+    <!-- Display the generated image -->
+    <img src="{{ generated_image|default("https://placeholder.com/400", true) }}" class="mainImg" alt="Generated Image">
+
+    {% if poster_form_visible %}
+    <!-- Form for generating the poster -->
+    <form action="/submit-poster" method="post" id="poster-form" enctype="multipart/form-data">
+        <ul>
+            <li>
+                <label for="poster-title">Poster Title:</label>
+                <input type="text" id="poster-title" name="poster-title" required />
+            </li>
+            <li>
+                <label for="logo-input">Upload Logo:</label>
+                <input type="file" id="logo-input" name="logo-input" accept="image/*" required />
+            </li>
+            <li>
+                <label for="button-text">Button Text:</label>
+                <input type="text" id="button-text" name="button-text" required />
+            </li>
+            <li class="button">
+                <button type="submit">Generate Poster</button>
+            </li>
+        </ul>
+    </form>
+    {% endif %}
+
+    {% if poster_image %}
+    <!-- Display the generated poster -->
+    <h2>Generated Poster</h2>
+    <img src="{{ poster_image }}" class="mainImg" alt="Generated Poster">
+    {% endif %}
+
+</body>
+</html>
+
